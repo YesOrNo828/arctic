@@ -51,6 +51,8 @@ markdown_extensions:
 nav:
   - Overview: index.md
 
+  - Flink:
+      - Flink CDC to Arctic: flink/flink-cdc-to-arctic.md
 
 plugins:
   - search
