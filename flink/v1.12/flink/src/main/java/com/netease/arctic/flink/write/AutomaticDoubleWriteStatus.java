@@ -60,17 +60,17 @@ public class AutomaticDoubleWriteStatus implements Serializable {
     sync();
   }
 
-  public boolean isDoubleWrite() {
+  public boolean isDoubleWriting() {
     return shouldDoubleWrite;
   }
 
   public void processWatermark(Watermark mark) {
-    if (isDoubleWrite()) {
+    if (isDoubleWriting()) {
       return;
     }
     if (specification.shouldDoubleWrite(mark.getTimestamp())) {
       shouldDoubleWrite = true;
-      LOG.info("processWatermark {}, subTaskId is {}, should double write is true.", mark, subtaskId);
+      LOG.info("processWatermark {}, subTaskId is {}, should double write immediately.", mark, subtaskId);
       LOG.info("begin update arctic table, set {} to true", LOG_STORE_CATCH_UP.key());
       UpdateProperties updateProperties = table.updateProperties();
       updateProperties.set(LOG_STORE_CATCH_UP.key(), String.valueOf(true));
@@ -86,6 +86,6 @@ public class AutomaticDoubleWriteStatus implements Serializable {
     shouldDoubleWrite =
         Boolean.parseBoolean(
             properties.getOrDefault(LOG_STORE_CATCH_UP.key(), String.valueOf(LOG_STORE_CATCH_UP.defaultValue())));
-    LOG.info("AutomaticDoubleWriteStatus sync, subTaskId: {}, should double write: {}", subtaskId, shouldDoubleWrite);
+    LOG.debug("AutomaticDoubleWriteStatus sync, subTaskId: {}, whether to start double writing: {}", subtaskId, shouldDoubleWrite);
   }
 }

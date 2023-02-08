@@ -37,16 +37,16 @@ public class AutomaticDoubleWriteStatusTest extends FlinkTestBase {
 
     AutomaticDoubleWriteStatus status = new AutomaticDoubleWriteStatus(tableLoader, Duration.ofSeconds(10));
     status.open();
-    Assert.assertFalse(status.isDoubleWrite());
+    Assert.assertFalse(status.isDoubleWriting());
     status.processWatermark(new Watermark(System.currentTimeMillis() - 11 * 1000));
-    Assert.assertFalse(status.isDoubleWrite());
+    Assert.assertFalse(status.isDoubleWriting());
     Assert.assertFalse(
         Boolean.parseBoolean(tableLoader.loadArcticTable().properties()
             .getOrDefault(LOG_STORE_CATCH_UP.key(), "false")));
     status.processWatermark(new Watermark(System.currentTimeMillis() - 9 * 1000));
-    Assert.assertTrue(status.isDoubleWrite());
+    Assert.assertTrue(status.isDoubleWriting());
 
-    Assert.assertTrue(status.isDoubleWrite());
+    Assert.assertTrue(status.isDoubleWriting());
     Assert.assertTrue(
         Boolean.parseBoolean(tableLoader.loadArcticTable().properties()
             .getOrDefault(LOG_STORE_CATCH_UP.key(), "false")));

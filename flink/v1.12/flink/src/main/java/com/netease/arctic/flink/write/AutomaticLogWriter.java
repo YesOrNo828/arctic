@@ -82,7 +82,7 @@ public class AutomaticLogWriter extends ArcticLogWriter {
 
   @Override
   public void processElement(StreamRecord<RowData> element) throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.processElement(element);
     }
   }
@@ -95,7 +95,7 @@ public class AutomaticLogWriter extends ArcticLogWriter {
 
   @Override
   public void prepareSnapshotPreBarrier(long checkpointId) throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.prepareSnapshotPreBarrier(checkpointId);
     } else {
       status.sync();
@@ -104,35 +104,35 @@ public class AutomaticLogWriter extends ArcticLogWriter {
 
   @Override
   public void snapshotState(StateSnapshotContext context) throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.snapshotState(context);
     }
   }
 
   @Override
   public void notifyCheckpointComplete(long checkpointId) throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.notifyCheckpointComplete(checkpointId);
     }
   }
 
   @Override
   public void notifyCheckpointAborted(long checkpointId) throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.notifyCheckpointAborted(checkpointId);
     }
   }
 
   @Override
   public void close() throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.close();
     }
   }
 
   @Override
   public void endInput() throws Exception {
-    if (status.isDoubleWrite()) {
+    if (status.isDoubleWriting()) {
       arcticLogWriter.endInput();
     }
   }
