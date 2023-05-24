@@ -1,4 +1,4 @@
-![logo](site/docs/ch/images/arctic_logo_for_git.png)
+![logo](site/docs/ch/images/arctic_logo_for_git.png) 
 
 Arctic is a LakeHouse management system under open architecture, which on top of data lake open formats provides more optimizations for streaming and upsert scenarios, as well as a set of pluggable self-optimizing mechanisms and management services. Using Arctic could help various data platforms, tools and products build out-of-the-box, streaming and batch unified LakeHouses quickly.
 
